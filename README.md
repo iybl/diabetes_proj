@@ -247,3 +247,38 @@ print(df_clean.isnull().sum()[df_clean.isnull().sum() > 0])
 print("\nRemaining columns:")
 print(df_clean.columns.tolist())
 
+# HANDLE MISSING DIAGNOSIS VALUES
+
+# Replace missing diagnosis codes with Unknown
+for column in ["diag_1", "diag_2", "diag_3"]:
+    df_clean[column] = df_clean[column].fillna("Unknown")
+
+# Check that no missing values remain in diagnosis columns
+print(df_clean[["diag_1", "diag_2", "diag_3"]].isnull().sum())
+
+
+# REMOVE IDENTIFIER COLUMNS
+
+# Remove patient and encounter identifiers
+df_clean = df_clean.drop(columns=[
+    "encounter_id",
+    "patient_nbr"
+])
+
+# Check the new dataset shape
+print("Dataset shape:", df_clean.shape)
+
+# CREATE BINARY READMISSION TARGET
+
+# Convert readmission into a binary target
+# 1 = readmitted within 30 days
+# 0 = not readmitted within 30 days
+
+df_clean["readmitted_binary"] = df_clean["readmitted"].map({
+    "<30": 1,
+    ">30": 0,
+    "NO": 0
+})
+
+# Check the new target distribution
+print(df_clean["readmitted_binary"].value_counts())
