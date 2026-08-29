@@ -182,3 +182,34 @@ print(f"\n{column}")
     print(f"Lower bound: {lower_bound}")
     print(f"Upper bound: {upper_bound}")
     print(f"Number of potential outliers: {len(outliers)}")
+
+# INVESTIGATE POTENTIAL OUTLIERS
+
+# Examine upper-bound outlier values
+
+for column in [
+    "time_in_hospital",
+    "num_lab_procedures",
+    "num_procedures",
+    "num_medications",
+    "number_outpatient",
+    "number_emergency",
+    "number_inpatient",
+    "number_diagnoses"
+]:
+
+Q1 = df_clean[column].quantile(0.25)
+Q3 = df_clean[column].quantile(0.75)
+    IQR = Q3 - Q1
+
+    upper_bound = Q3 + 1.5 * IQR
+
+    print(f"\n{column}")
+    print(
+        df_clean[
+            df_clean[column] > upper_bound
+        ][column]
+        .value_counts()
+        .sort_index()
+    )
+
