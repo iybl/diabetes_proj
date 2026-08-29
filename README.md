@@ -67,3 +67,10 @@ df_raw["age"].value_counts()
 
 # Examine target variable distribution
 df_raw["readmitted"].value_counts()
+
+# CHECK FOR DUPLICATES
+
+# Count duplicate rows
+df_raw.duplicated().sum()
+
+
