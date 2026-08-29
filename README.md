@@ -103,4 +103,29 @@ missing_summary[
     ascending=False
 )
 
+# OUTLIER IDENTIFICATION
 
+# Identify numerical columns
+numerical_columns = df_clean.select_dtypes(include="number").columns
+
+# Calculate IQR boundaries for each numerical column
+for column in numerical_columns:
+    Q1 = df_clean[column].quantile(0.25)
+    Q3 = df_clean[column].quantile(0.75)
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    outliers = df_clean[
+        (df_clean[column] < lower_bound) |
+        (df_clean[column] > upper_bound)
+    ]
+
+    print(f"\n{column}")
+    print(f"Q1: {Q1}")
+    print(f"Q3: {Q3}")
+    print(f"IQR: {IQR}")
+    print(f"Lower bound: {lower_bound}")
+    print(f"Upper bound: {upper_bound}")
+    print(f"Number of potential outliers: {len(outliers)}")
