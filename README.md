@@ -219,3 +219,31 @@ print(df_clean["race"].value_counts(dropna=False))
 # Replace missing race values with Unknown
 df_clean["race"] = df_clean["race"].fillna("Unknown")
 
+# OUTLIER DECISION
+
+# Review the maximum values of numerical features
+print(df_clean[numerical_columns].max())
+
+# REMOVE FEATURES WITH HIGH VOLUME MISSING OR WEAK RELEVANCE
+
+df_clean = df_clean.drop(columns=[
+"weight",
+"max_glu_serum",
+"A1Cresult",
+"medical_specialty",
+"payer_code"
+])
+
+# CHECK CLEANED DATASET
+
+# Check the number of rows and columns
+print("Dataset shape:", df_clean.shape)
+
+# Check remaining missing values
+print("\nRemaining missing values:")
+print(df_clean.isnull().sum()[df_clean.isnull().sum() > 0])
+
+# Display remaining columns
+print("\nRemaining columns:")
+print(df_clean.columns.tolist())
+
