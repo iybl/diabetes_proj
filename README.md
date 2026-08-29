@@ -73,4 +73,10 @@ df_raw["readmitted"].value_counts()
 # Count duplicate rows
 df_raw.duplicated().sum()
 
+# SUMMARY STATISTICS
+
+# Display summary statistics for numerical variables
+df_raw.describe()
+
+
 
