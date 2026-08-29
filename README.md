@@ -111,50 +111,37 @@ df_clean["payer_code"] = df_clean["payer_code"].fillna("Unknown")
 
 from scipy.stats import chi2_contingency
 
-# Test the relationship between categorical features and readmission
-for column in ["medical_specialty", "payer_code"]:
-
-contingency = pd.crosstab(
-        df_clean[column],
-        df_clean["readmitted"]
-    )
-
-chi2, p, dof, expected = chi2_contingency(contingency)
-
-  print(f"{column}")
-    print(f"Chi-square: {chi2:.2f}")
-    print(f"p-value: {p:.4f}")
-
-# Calculate Cramér's V to measure the strength of the relationship
-
+# Calculate chi-square and Cramér's V
 def cramers_v(column, target):
 
-  contingency = pd.crosstab(
+ contingency = pd.crosstab(
         df_clean[column],
         df_clean[target]
     )
 
  chi2, p, dof, expected = chi2_contingency(contingency)
 
- n = contingency.sum().sum()
+n = contingency.sum().sum()
     min_dimension = min(contingency.shape) - 1
 
-  v = np.sqrt((chi2 / n) / min_dimension)
+ v = np.sqrt((chi2 / n) / min_dimension)
 
- return chi2, p, v
+return chi2, p, v
 
 
+# Test the relationship between categorical features and readmission
 for column in ["medical_specialty", "payer_code"]:
 
-   chi2, p, v = cramers_v(
+ chi2, p, v = cramers_v(
         column,
         "readmitted"
     )
 
- print(f"{column}")
+  print(f"{column}")
     print(f"Chi-square: {chi2:.2f}")
     print(f"p-value: {p:.4f}")
     print(f"Cramér's V: {v:.4f}")
+
 
 # OUTLIER IDENTIFICATION
 
@@ -202,9 +189,9 @@ Q1 = df_clean[column].quantile(0.25)
 Q3 = df_clean[column].quantile(0.75)
     IQR = Q3 - Q1
 
-    upper_bound = Q3 + 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
 
-    print(f"\n{column}")
+ print(f"\n{column}")
     print(
         df_clean[
             df_clean[column] > upper_bound
@@ -212,4 +199,23 @@ Q3 = df_clean[column].quantile(0.75)
         .value_counts()
         .sort_index()
     )
+
+# HANDLE INVALID AND MISSING CATEGORICAL VALUES
+
+# Check gender values including invalid values
+print("Gender values:")
+print(df_clean["gender"].value_counts(dropna=False))
+
+# Replace invalid gender values with Unknown
+df_clean["gender"] = df_clean["gender"].replace(
+    "Unknown/Invalid",
+    "Unknown"
+)
+
+# Check race values including missing values
+print("\nRace values:")
+print(df_clean["race"].value_counts(dropna=False))
+
+# Replace missing race values with Unknown
+df_clean["race"] = df_clean["race"].fillna("Unknown")
 
