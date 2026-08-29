@@ -78,5 +78,29 @@ df_raw.duplicated().sum()
 # Display summary statistics for numerical variables
 df_raw.describe()
 
+# CONVERT UNKNOWN VALUES TO MISSING VALUES
+
+# Replace "?" with NaN in the clean dataset only
+df_clean = df_clean.replace("?", np.nan)
+
+# Check missing values after conversion
+missing_count = df_clean.isnull().sum()
+
+# Calculate percentage of missing values
+missing_percent = (missing_count / len(df_clean)) * 100
+
+# Create missing-value summary
+missing_summary = pd.DataFrame({
+    "Missing": missing_count,
+    "Percentage": missing_percent
+})
+
+# Display columns containing missing values
+missing_summary[
+    missing_summary["Missing"] > 0
+].sort_values(
+    "Percentage",
+    ascending=False
+)
 
 
