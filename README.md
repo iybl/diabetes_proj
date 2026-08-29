@@ -121,10 +121,10 @@ def cramers_v(column, target):
 
  chi2, p, dof, expected = chi2_contingency(contingency)
 
-n = contingency.sum().sum()
+  n = contingency.sum().sum()
     min_dimension = min(contingency.shape) - 1
 
- v = np.sqrt((chi2 / n) / min_dimension)
+  v = np.sqrt((chi2 / n) / min_dimension)
 
 return chi2, p, v
 
@@ -146,7 +146,16 @@ for column in ["medical_specialty", "payer_code"]:
 # OUTLIER IDENTIFICATION
 
 # Identify numerical columns
-numerical_columns = df_clean.select_dtypes(include="number").columns
+numerical_columns = [
+    "time_in_hospital",
+    "num_lab_procedures",
+    "num_procedures",
+    "num_medications",
+    "number_outpatient",
+    "number_emergency",
+    "number_inpatient",
+    "number_diagnoses"
+]
 
 # Calculate IQR boundaries for each numerical column
 for column in numerical_columns:
@@ -282,3 +291,20 @@ df_clean["readmitted_binary"] = df_clean["readmitted"].map({
 
 # Check the new target distribution
 print(df_clean["readmitted_binary"].value_counts())
+
+# FINAL CLEAN DATA CHECK
+
+# Check final dataset shape
+print("Final dataset shape:", df_clean.shape)
+
+# Check for remaining missing values
+print("\nRemaining missing values:")
+print(df_clean.isnull().sum().sum())
+
+# Check target distribution
+print("\nReadmission target:")
+print(df_clean["readmitted_binary"].value_counts())
+
+# Check data types
+print("\nData types:")
+print(df_clean.dtypes)
