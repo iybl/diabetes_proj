@@ -54,3 +54,16 @@ question_mark_summary[
     ascending=False
 )
 
+# CHECK CATEGORICAL VARIABLES
+
+# Examine race distribution
+df_raw["race"].value_counts()
+
+# Examine gender distribution
+df_raw["gender"].value_counts()
+
+# Examine age distribution
+df_raw["age"].value_counts()
+
+# Examine target variable distribution
+df_raw["readmitted"].value_counts()
