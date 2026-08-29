@@ -103,6 +103,59 @@ missing_summary[
     ascending=False
 )
 
+# Treat missing values as unknown 
+df_clean["medical_specialty"] = df_clean["medical_specialty"].fillna("Unknown")
+df_clean["payer_code"] = df_clean["payer_code"].fillna("Unknown")
+
+# FEATURE RELEVANCE
+
+from scipy.stats import chi2_contingency
+
+# Test the relationship between categorical features and readmission
+for column in ["medical_specialty", "payer_code"]:
+
+contingency = pd.crosstab(
+        df_clean[column],
+        df_clean["readmitted"]
+    )
+
+chi2, p, dof, expected = chi2_contingency(contingency)
+
+  print(f"{column}")
+    print(f"Chi-square: {chi2:.2f}")
+    print(f"p-value: {p:.4f}")
+
+# Calculate Cramér's V to measure the strength of the relationship
+
+def cramers_v(column, target):
+
+  contingency = pd.crosstab(
+        df_clean[column],
+        df_clean[target]
+    )
+
+ chi2, p, dof, expected = chi2_contingency(contingency)
+
+ n = contingency.sum().sum()
+    min_dimension = min(contingency.shape) - 1
+
+  v = np.sqrt((chi2 / n) / min_dimension)
+
+ return chi2, p, v
+
+
+for column in ["medical_specialty", "payer_code"]:
+
+   chi2, p, v = cramers_v(
+        column,
+        "readmitted"
+    )
+
+ print(f"{column}")
+    print(f"Chi-square: {chi2:.2f}")
+    print(f"p-value: {p:.4f}")
+    print(f"Cramér's V: {v:.4f}")
+
 # OUTLIER IDENTIFICATION
 
 # Identify numerical columns
@@ -114,15 +167,15 @@ for column in numerical_columns:
     Q3 = df_clean[column].quantile(0.75)
     IQR = Q3 - Q1
 
-    lower_bound = Q1 - 1.5 * IQR
+lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
 
-    outliers = df_clean[
+outliers = df_clean[
         (df_clean[column] < lower_bound) |
         (df_clean[column] > upper_bound)
     ]
 
-    print(f"\n{column}")
+print(f"\n{column}")
     print(f"Q1: {Q1}")
     print(f"Q3: {Q3}")
     print(f"IQR: {IQR}")
