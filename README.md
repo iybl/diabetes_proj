@@ -318,3 +318,7 @@ print(df_clean["readmitted_binary"].value_counts())
 # Check data types
 print("\nData types:")
 print(df_clean.dtypes)
+
+# EXPORT CLEANED DATASET
+df_clean.to_csv("diabetic_data_clean.csv", index=False)
+
