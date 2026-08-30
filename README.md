@@ -392,3 +392,20 @@ plt.xticks(rotation=45)
 
 plt.tight_layout()
 plt.show()
+
+#GENDER DISTRIBUTION
+
+plt.figure(figsize=(8, 5))
+gender_counts = df_clean["gender"].value_counts()
+ax = gender_counts.plot(kind="bar")
+
+for i, v in enumerate(gender_counts):
+    ax.text(i, v + 500, str(v), ha="center")
+
+plt.title("Distribution of Patient Gender")
+plt.xlabel("Gender")
+plt.ylabel("Number of patients")
+plt.xticks(rotation=0)
+plt.tight_layout()
+plt.show()
+
