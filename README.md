@@ -477,3 +477,23 @@ plt.xticks(range(0, 11))
 plt.tight_layout()
 plt.show()
 
+# DISTRIBUTION OF EMERGENCY VISITS
+
+plt.figure(figsize=(10, 6))
+
+plt.hist(
+    df_clean["number_emergency"],
+    bins=np.arange(-0.5, 5.5, 1)
+)
+
+plt.title("Distribution of Emergency Visits")
+plt.xlabel("Number of emergency visits")
+plt.ylabel("Number of patients")
+
+plt.xlim(-0.5, 8)
+
+plt.xticks(range(0, 9))
+
+plt.tight_layout()
+plt.show()
+
