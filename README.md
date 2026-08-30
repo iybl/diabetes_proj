@@ -54,8 +54,9 @@ question_mark_summary[
     ascending=False
 )
 
+# ============================================================
 # CHECK CATEGORICAL VARIABLES
-
+# ============================================================
 # Examine race distribution
 df_raw["race"].value_counts()
 
@@ -68,10 +69,19 @@ df_raw["age"].value_counts()
 # Examine target variable distribution
 df_raw["readmitted"].value_counts()
 
+# CHECK ALL CATEGORICAL VARIABLES FOR INCONSISTENCIES
+
+categorical_cols = df_raw.select_dtypes(include=["object", "str"]).columns
+
+for col in categorical_cols:
+    print(f"\n{col}")
+    print(df_raw[col].value_counts(dropna=False))
+
 # CHECK FOR DUPLICATES
 
 # Count duplicate rows
-df_raw.duplicated().sum()
+print("Duplicate rows found:", df_raw.duplicated().sum())
+# No duplicate records found — no rows removed.
 
 # SUMMARY STATISTICS
 
