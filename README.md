@@ -409,3 +409,17 @@ plt.xticks(rotation=0)
 plt.tight_layout()
 plt.show()
 
+# RACE DISTRIBUTION
+plt.figure(figsize=(10, 6))
+race_counts = df_clean["race"].value_counts()
+ax = race_counts.plot(kind="bar")
+
+for i, v in enumerate(race_counts):
+    ax.text(i, v + 500, str(v), ha="center")
+
+plt.title("Distribution of Patient Race")
+plt.xlabel("Race")
+plt.ylabel("Number of patients")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
