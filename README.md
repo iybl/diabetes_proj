@@ -343,58 +343,23 @@ plt.xticks(rotation=10)
 plt.tight_layout()
 plt.show()
 
-# READMISSION RATE BY AGE GROUP
+# NUMERICAL VARIABLE DISTRIBUTION
 
-readmission_by_age = (
-    df_clean.groupby("age")["readmitted_binary"]
-    .mean()
-    .reindex([
-        "[0-10)",
-        "[10-20)",
-        "[20-30)",
-        "[30-40)",
-        "[40-50)",
-        "[50-60)",
-        "[60-70)",
-        "[70-80)",
-        "[80-90)",
-        "[90-100)"
-    ])
+# Distribution of time spent in hospital
+plt.figure(figsize=(8, 5))
+
+plt.hist(
+    df_clean["time_in_hospital"],
+    bins=14
 )
 
-plt.figure(figsize=(10, 6))
-
-readmission_by_age.plot(kind="bar")
-
-plt.title("30-Day Readmission Rate by Age Group")
-plt.xlabel("Age group")
-plt.ylabel("Readmission rate")
-plt.xticks(rotation=45)
+plt.title("Distribution of Time in Hospital")
+plt.xlabel("Days in hospital")
+plt.ylabel("Number of patients")
 
 plt.tight_layout()
 plt.show()
 
-# MEDICATIONS VS 30-DAY READMISSION
-
-plt.figure(figsize=(8, 6))
-
-sns.boxplot(
-    x="readmitted_binary",
-    y="num_medications",
-    data=df_clean
-)
-
-plt.title("Number of Medications by 30-Day Readmission Status")
-plt.xlabel("Readmitted within 30 days")
-plt.ylabel("Number of medications")
-
-plt.xticks(
-    [0, 1],
-    ["Not readmitted", "Readmitted"]
-)
-
-plt.tight_layout()
-plt.show()
 
 # TIME IN HOSPITAL VS 30-DAY READMISSION GRAPH
 
