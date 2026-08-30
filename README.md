@@ -533,3 +533,25 @@ plt.tight_layout()
 plt.show()
 
 print(utilisation_by_target)
+
+# PREVIOUS INPATIENT VISITS VS 30-DAY READMISSION
+
+plt.figure(figsize=(8, 6))
+
+sns.boxplot(
+    x="readmitted_binary",
+    y="number_inpatient",
+    data=df_clean
+)
+
+plt.title("Previous Inpatient Visits by 30-Day Readmission Status")
+plt.xlabel("Readmitted within 30 days")
+plt.ylabel("Number of previous inpatient visits")
+
+plt.xticks(
+    [0, 1],
+    ["Not readmitted", "Readmitted"]
+)
+
+plt.tight_layout()
+plt.show()
