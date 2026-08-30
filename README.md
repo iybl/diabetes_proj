@@ -322,3 +322,23 @@ print(df_clean.dtypes)
 # EXPORT CLEANED DATASET
 df_clean.to_csv("diabetic_data_clean.csv", index=False)
 
+# TARGET VARIABLE DISTRIBUTION
+
+# Count patients in each readmission category
+readmission_counts = df_clean["readmitted_binary"].value_counts()
+
+# Create bar chart
+plt.figure(figsize=(6, 4))
+
+plt.bar(
+    ["Not readmitted within 30 days", "Readmitted within 30 days"],
+    readmission_counts.reindex([0, 1])
+)
+
+plt.title("30-Day Readmission Distribution")
+plt.xlabel("Readmission status")
+plt.ylabel("Number of patients")
+plt.xticks(rotation=10)
+
+plt.tight_layout()
+plt.show()
