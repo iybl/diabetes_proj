@@ -423,3 +423,21 @@ plt.ylabel("Number of patients")
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
+
+# DISTRIBUTION OF NUMBER OF MEDICATIONS
+
+plt.figure(figsize=(10, 6))
+plt.hist(
+    df_clean["num_medications"],
+    bins=np.arange(
+        df_clean["num_medications"].min() - 0.5,
+        df_clean["num_medications"].max() + 1.5,
+        1
+    )
+)
+plt.title("Distribution of Number of Medications")
+plt.xlabel("Number of medications")
+plt.ylabel("Number of patients")
+plt.xlim(0, 60)
+plt.tight_layout()
+plt.show()
