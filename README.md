@@ -609,3 +609,46 @@ plt.xticks(
 plt.tight_layout()
 plt.show()
 
+# CORRELATION HEATMAP
+
+correlation_columns = [
+    "time_in_hospital",
+    "num_lab_procedures",
+    "num_procedures",
+    "num_medications",
+    "number_outpatient",
+    "number_emergency",
+    "number_inpatient",
+    "number_diagnoses",
+    "readmitted_binary"
+]
+
+correlation_matrix = df_clean[correlation_columns].corr()
+
+plt.figure(figsize=(12, 9))
+
+sns.heatmap(
+    correlation_matrix,
+    annot=True,
+    fmt=".2f",
+    cmap="coolwarm",
+    center=0
+)
+
+plt.title("Correlation Between Numerical Variables")
+
+plt.tight_layout()
+plt.show()
+
+# MISSING VALUE VISUALISATION
+missing_percent_raw = (df_raw.replace("?", np.nan).isnull().sum() / len(df_raw)) * 100
+missing_percent_raw = missing_percent_raw[missing_percent_raw > 0].sort_values(ascending=False)
+
+plt.figure(figsize=(10, 6))
+missing_percent_raw.plot(kind="bar")
+plt.title("Percentage of Missing Values by Column")
+plt.xlabel("Column")
+plt.ylabel("Missing (%)")
+plt.xticks(rotation=45, ha="right")
+plt.tight_layout()
+plt.show()
