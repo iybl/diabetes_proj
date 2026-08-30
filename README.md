@@ -456,3 +456,24 @@ plt.ylabel("Number of patients")
 plt.xlim(-5, 100)
 plt.tight_layout()
 plt.show()
+
+# DISTRIBUTION OF OUTPATIENT VISITS
+
+plt.figure(figsize=(10, 6))
+
+plt.hist(
+    df_clean["number_outpatient"],
+    bins=np.arange(-0.5, 10.5, 1)
+)
+
+plt.title("Distribution of Outpatient Visits")
+plt.xlabel("Number of outpatient visits")
+plt.ylabel("Number of patients")
+
+plt.xlim(-0.5, 10)
+
+plt.xticks(range(0, 11))
+
+plt.tight_layout()
+plt.show()
+
