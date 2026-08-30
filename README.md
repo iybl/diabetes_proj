@@ -54,9 +54,9 @@ question_mark_summary[
     ascending=False
 )
 
-# ============================================================
+
 # CHECK CATEGORICAL VARIABLES
-# ============================================================
+
 # Examine race distribution
 df_raw["race"].value_counts()
 
