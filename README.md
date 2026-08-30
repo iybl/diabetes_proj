@@ -396,3 +396,20 @@ plt.xticks(
 plt.tight_layout()
 plt.show()
 
+# TIME IN HOSPITAL VS 30-DAY READMISSION GRAPH
+
+plt.figure(figsize=(8, 6))
+sns.boxplot(
+    x="readmitted_binary",
+    y="time_in_hospital",
+    data=df_clean
+)
+plt.title("Time in Hospital by 30-Day Readmission Status")
+plt.xlabel("Readmitted within 30 days")
+plt.ylabel("Days in hospital")
+plt.xticks([0, 1], ["Not readmitted", "Readmitted"])
+plt.tight_layout()
+plt.show()
+
+# Boxes look near-identical — confirm with actual numbers
+print(df_clean.groupby("readmitted_binary")["time_in_hospital"].agg(["mean", "median"]))
