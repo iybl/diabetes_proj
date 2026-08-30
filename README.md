@@ -413,3 +413,17 @@ plt.show()
 
 # Boxes look near-identical — confirm with actual numbers
 print(df_clean.groupby("readmitted_binary")["time_in_hospital"].agg(["mean", "median"]))
+
+# AGE DISTRIBUTION
+
+plt.figure(figsize=(10, 6))
+
+df_clean["age"].value_counts().sort_index().plot(kind="bar")
+
+plt.title("Distribution of Patient Age Groups")
+plt.xlabel("Age group")
+plt.ylabel("Number of patients")
+plt.xticks(rotation=45)
+
+plt.tight_layout()
+plt.show()
