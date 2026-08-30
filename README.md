@@ -441,3 +441,18 @@ plt.ylabel("Number of patients")
 plt.xlim(0, 60)
 plt.tight_layout()
 plt.show()
+
+# DISTRIBUTION OF LABORATORY PROCEDURES
+
+plt.figure(figsize=(10, 6))
+max_val = df_clean["num_lab_procedures"].max()
+plt.hist(
+    df_clean["num_lab_procedures"],
+    bins=np.arange(-2.5, max_val + 5, 5)  # width-5 bins, evenly spaced
+)
+plt.title("Distribution of Laboratory Procedures")
+plt.xlabel("Number of laboratory procedures")
+plt.ylabel("Number of patients")
+plt.xlim(-5, 100)
+plt.tight_layout()
+plt.show()
