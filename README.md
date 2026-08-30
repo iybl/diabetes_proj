@@ -587,3 +587,25 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
 
+# MEDICATIONS VS 30-DAY READMISSION
+
+plt.figure(figsize=(8, 6))
+
+sns.boxplot(
+    x="readmitted_binary",
+    y="num_medications",
+    data=df_clean
+)
+
+plt.title("Number of Medications by 30-Day Readmission Status")
+plt.xlabel("Readmitted within 30 days")
+plt.ylabel("Number of medications")
+
+plt.xticks(
+    [0, 1],
+    ["Not readmitted", "Readmitted"]
+)
+
+plt.tight_layout()
+plt.show()
+
