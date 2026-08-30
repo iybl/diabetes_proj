@@ -497,3 +497,39 @@ plt.xticks(range(0, 9))
 plt.tight_layout()
 plt.show()
 
+# DISTRIBUTION OF PREVIOUS INPATIENT VISITS
+
+plt.figure(figsize=(10, 6))
+
+plt.hist(df_clean["number_inpatient"], bins=30)
+
+plt.title("Distribution of Previous Inpatient Visits")
+plt.xlabel("Number of previous inpatient visits")
+plt.ylabel("Number of patients")
+
+plt.xlim(-0.5, 10 )
+
+plt.xticks(range(0, 11))
+
+plt.tight_layout()
+plt.show()
+
+# PRIOR HEALTHCARE UTILISATION VS 30-DAY READMISSION
+utilisation_cols = ["number_inpatient", "number_outpatient", "number_emergency"]
+
+utilisation_by_target = (
+    df_clean.groupby("readmitted_binary")[utilisation_cols]
+    .mean()
+    .rename(index={0: "Not readmitted", 1: "Readmitted"})
+)
+
+utilisation_by_target.plot(kind="bar", figsize=(9, 6))
+plt.title("Mean Prior Healthcare Utilisation by 30-Day Readmission Status")
+plt.xlabel("Readmission status")
+plt.ylabel("Mean number of visits (prior year)")
+plt.xticks(rotation=0)
+plt.legend(title="Visit type")
+plt.tight_layout()
+plt.show()
+
+print(utilisation_by_target)
